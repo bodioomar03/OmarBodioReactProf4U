@@ -29,3 +29,5 @@ Ad ogni utente sarà associata l'azienda per la quale ha lavorato l'ultima volta
     sarà posibile da parte del fruitore del sito trovare i contatti della azienda precedente per avere una valuitazione del professionista
 I professionisti possono essere filtrati in base alle proprie competenze (che riguardano il bs della azienda per la quale lavoravano prima)
 I professionisti scelti potranno essere visualizzati in un "carrello" con il solo nome e cognome e competenze
+
+Numero totale di pagine: 3
