@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import HomePage from './HomePage.tsx';
+import DescriptionPage from './DescriptionPage.tsx';
 
 
 
@@ -21,6 +22,7 @@ function App(){
 	return (
 		<Stack.Navigator initialRouteName="HomePage">
 			<Stack.Screen name="HomePage" component={HomePage} />
+			<Stack.Screen name="DescriptionPage" component={DescriptionPage} />
 	
 		</Stack.Navigator>
 	);

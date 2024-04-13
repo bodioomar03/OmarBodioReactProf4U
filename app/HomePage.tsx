@@ -7,11 +7,27 @@ import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, TextInpu
  * Represents a card of a worker.
  */
 type CardOfWorker = {
-    id: number,
-    name: string,
+    id: number;
+    name: string;
+    username: string;
+    email: string;
+    address: {
+        street: string;
+        suite: string;
+        city: string;
+        zipcode: string;
+        geo: {
+            lat: string;
+            lng: string;
+        };
+    };
+    phone: string;
+    website: string;
     company: {
-        bs: string,
-    }
+        name: string;
+        catchPhrase: string;
+        bs: string;
+    };
 };
 
 
@@ -38,9 +54,9 @@ function HomePage() {
 
 	},[]);
 
-	const onPress = () => { 
-        console.log("pressed");
-    }
+	const onPress = (id: number, name: string) => {
+		(navigation as any).navigate("DescriptionPage", ({id: id, name: name}));
+	}
 
     const [searchText, setSearchText] = useState("");
     const filteredCards = cards.filter((card) =>
@@ -59,7 +75,7 @@ function HomePage() {
             {!loading ? (
                 <ScrollView>
                     {filteredCards.map((card) => (
-                        <TouchableOpacity key={card.id} onPress={() => onPress()}>
+                        <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name)}>
                             <View style={styles.card}>
                                 <Text style={styles.title}>{card.name}</Text>
 
