@@ -49,7 +49,8 @@ function HomePage() {
 
     return (
         <SafeAreaView>
-            <Text style={styles.title}>Workers</Text>
+            <View style={styles.background}>
+            <Text style={styles.name}>Prof4U</Text>
             <TextInput style={styles.input}
                 placeholder="Search"
                 value={searchText}
@@ -77,69 +78,76 @@ function HomePage() {
                     <ActivityIndicator size={"large"} color={'blue'} />
                 </View>
             )}
+            </View>
         </SafeAreaView>
     );
 
 
 }
 const styles = StyleSheet.create({
-	
-	load: {
-		
-		backgroundColor: 'red',
-	},
-	button: {
-		backgroundColor: 'green',
-		paddingHorizontal: 10,
-		fontSize: 24,
-		paddingVertical: 20,
-		borderRadius: 10,
-		
-	},
+    name: {
+        fontSize: 36,
+        color: 'rgba(255, 70, 0, 1)',
+        marginHorizontal: 10,
+        marginBottom: 10,
+        textAlign: 'center',
+        fontWeight: 'bold',
+    },
+    background: {
+        backgroundColor: 'rgba(255, 153, 0, 0.2)',
+    },
+    load: {
+        backgroundColor: 'rgba(255, 102, 0, 0.8)',
+    },
+    button: {
+        backgroundColor: 'rgba(255, 51, 0, 0.8)',
+        paddingHorizontal: 10,
+        fontSize: 24,
+        paddingVertical: 20,
+        borderRadius: 10,
+    },
     phrase: {
         fontSize: 16,
-        color: 'green',
+        color: 'rgba(255, 153, 0, 1)',
         marginHorizontal: 10,
         paddingBottom: 10,
         textAlign: 'center'
     },
-	title: {
-		fontSize: 24,
-		fontWeight: 'bold',
-		color: 'black',
-		marginBottom: 10,
-		marginHorizontal: 10,
-		textAlign: 'center',
-	},
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'rgba(255, 153, 0, 1)',
+        marginBottom: 10,
+        marginHorizontal: 10,
+        textAlign: 'center',
+    },
     input: {
         fontSize: 16,
-        color: 'black',
+        color: 'rgba(255, 153, 0, 1)',
         marginHorizontal: 10,
         textAlign: 'left',
-        backgroundColor: 'white',
-        borderColor: 'black',
+        backgroundColor: 'rgba(255, 204, 0, 0.2)',
+        borderColor: 'rgba(255, 153, 0, 1)',
         borderWidth: 1,
         borderRadius: 10,
         marginBottom: 10,
-        
     },
-
-	body: {
-		fontSize: 16,
-		color: 'black',
-		marginHorizontal: 10,
-		paddingBottom: 10,
-		textAlign: 'center'
-	},
-	card: {
-		backgroundColor: 'gray',
-		borderColor: 'black',
+    body: {
+        fontSize: 16,
+        color: 'rgba(255, 153, 0, 1)',
+        marginHorizontal: 10,
+        paddingBottom: 10,
+        textAlign: 'center'
+    },
+    card: {
+        backgroundColor: 'rgba(255, 153, 0, 0.2)',
+        borderColor: 'rgba(255, 153, 0, 1)',
         borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,
         marginBottom: 10,
-	}
+    }
 });
 
 export default HomePage;
