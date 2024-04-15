@@ -18,14 +18,19 @@ function DescriptionPage() {
     const onButtonPress = () => {
         navigation.goBack()
     };
-    const route = useRoute<{ params: { id: number, name: string } } & { key: string, name: string }>();
-    const { id, name } = route.params;
+    const route = useRoute<{ params: { id: number, name: string, company_name: string, phone: string, address: string, email: string, website: string} } & { key: string, name: string }>();
+    const { id, name , company_name, phone, address, email, website} = route.params;
 
     return (
         <SafeAreaView>
             <View style={styles.background}>
-            <Text style={styles.details}>id: {id}</Text>
-            <Text style={styles.details}>user id: {name}</Text>
+            <Text style={styles.details}>name: {name}</Text>
+            <Text style={styles.details}>address: {address}</Text>
+            <Text style={styles.details}>phone number:  {phone}</Text>
+            <Text style={styles.details}>email: {email}</Text>
+            <Text style={styles.details}>last company information</Text>
+            <Text style={styles.details}>name: {company_name}</Text>
+            <Text style={styles.details}>website: {website}</Text>
             <TouchableOpacity onPress={onButtonPress}>
                 <View style={styles.button}>
                     <Text style={styles.textInButton}>Back</Text>

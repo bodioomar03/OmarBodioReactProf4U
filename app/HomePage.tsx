@@ -54,8 +54,8 @@ function HomePage() {
 
 	},[]);
 
-	const onPress = (id: number, name: string) => {
-		(navigation as any).navigate("DescriptionPage", ({id: id, name: name}));
+	const onPress = (id: number, name: string, company_name: string, phone: string, address: string, email: string, website: string) => {
+		(navigation as any).navigate("DescriptionPage", ({id: id, name: name, company_name: company_name, phone: phone, address: address, email: email, website: website}));
 	}
 
     const [searchText, setSearchText] = useState("");
@@ -75,7 +75,7 @@ function HomePage() {
             {!loading ? (
                 <ScrollView>
                     {filteredCards.map((card) => (
-                        <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name)}>
+                        <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name, card.company.name, card.phone.split(" ")[0], card.address.street, card.email, card.website)}>
                             <View style={styles.card}>
                                 <Text style={styles.title}>{card.name}</Text>
 
