@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     },
     call: {
         fontSize: 24,
-        backgroundColor: 'rgba(255, 51, 0, 0.8)',
+        backgroundColor: "#DC661F",
         marginHorizontal: 100,
         borderRadius: 10,
         textAlign: 'center',
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        backgroundColor: 'rgba(255, 51, 0, 0.8)',
+        backgroundColor: "#DC661F",
         paddingHorizontal: 10,
         fontSize: 24,
         paddingVertical: 20,
