@@ -75,7 +75,7 @@ function HomePage() {
             {!loading ? (
                 <ScrollView>
                     {filteredCards.map((card) => (
-                        <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name, card.company.name, card.phone.split(" ")[0], card.address.street, card.email, card.website)}>
+                        <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name.toUpperCase(), card.company.name, card.phone.split(" ")[0], card.address.street + ", " + card.address.suite + ", " + card.address.city, card.email, card.website)}>
                             <View style={styles.card}>
                                 <Text style={styles.title}>{card.name}</Text>
 
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        marginBottom: 10,
+        margin: 10,
     }
 });
 
