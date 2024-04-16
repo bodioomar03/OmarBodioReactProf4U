@@ -91,7 +91,7 @@ function HomePage() {
     
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView>
             
             <View style={styles.background}>
                 <Text style={styles.name}>Prof4U: Where Companies Meet Competence!</Text>
@@ -110,7 +110,7 @@ function HomePage() {
                     />
                 </Text>
                 {!loading ? (
-                    <ScrollView style={{ marginBottom: 70 }}>
+                    <ScrollView style={{ marginBottom: 400 }}>
                         {orderCards.map((card) => (
                             <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name.toUpperCase(), card.company.name, card.phone.split(" ")[0], card.address.street + ", " + card.address.suite + ", " + card.address.city, card.email, card.website)}>
                                 <View style={styles.card}>
