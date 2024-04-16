@@ -64,16 +64,16 @@ function HomePage() {
     );
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style = {{flex:1}}>
             <View style={styles.background}>
-            <Text style={styles.name}>Prof4U</Text>
+                <Text style = {styles.name}>Prof4U: Where Companies Meet Competence!</Text>
             <TextInput style={styles.input}
                 placeholder="Search"
                 value={searchText}
                 onChangeText={(text) => setSearchText(text)}
             />
             {!loading ? (
-                <ScrollView>
+                <ScrollView style={{marginBottom:70}}>
                     {filteredCards.map((card) => (
                         <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name.toUpperCase(), card.company.name, card.phone.split(" ")[0], card.address.street + ", " + card.address.suite + ", " + card.address.city, card.email, card.website)}>
                             <View style={styles.card}>
@@ -88,10 +88,11 @@ function HomePage() {
                             </View>
                         </TouchableOpacity>
                     ))}
+                                    
                 </ScrollView>
             ) : (
                 <View style={styles.load}>
-                    <ActivityIndicator size={"large"} color={'blue'} />
+                    <ActivityIndicator size={"large"} color={'rgba(255,70,0,1)'} />
                 </View>
             )}
             </View>
@@ -102,15 +103,17 @@ function HomePage() {
 }
 const styles = StyleSheet.create({
     name: {
-        fontSize: 36,
-        color: 'rgba(255, 70, 0, 1)',
+        fontSize: 20,
+        color: "#DC661F",
         marginHorizontal: 10,
-        marginBottom: 10,
+        marginBottom: 1,
+        marginTop: 10,
         textAlign: 'center',
         fontWeight: 'bold',
     },
     background: {
         backgroundColor: 'rgba(255, 153, 0, 0.2)',
+    
     },
     load: {
         backgroundColor: 'rgba(255, 102, 0, 0.8)',
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
     },
     phrase: {
         fontSize: 16,
-        color: 'rgba(255, 153, 0, 1)',
+        color: "#DC661F",
         marginHorizontal: 10,
         paddingBottom: 10,
         textAlign: 'center'
@@ -132,7 +135,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: 'rgba(255, 153, 0, 1)',
+        color: "#DC661F",
         marginBottom: 10,
         marginHorizontal: 10,
         textAlign: 'center',
@@ -142,22 +145,23 @@ const styles = StyleSheet.create({
         color: 'rgba(255, 153, 0, 1)',
         marginHorizontal: 10,
         textAlign: 'left',
-        backgroundColor: 'rgba(255, 204, 0, 0.2)',
-        borderColor: 'rgba(255, 153, 0, 1)',
+        backgroundColor: 'rgba(255, 153, 0, 0.2)',
+        borderColor: "#DC661F",
         borderWidth: 1,
         borderRadius: 10,
         marginBottom: 10,
+        marginTop: 10
     },
     body: {
         fontSize: 16,
-        color: 'rgba(255, 153, 0, 1)',
+        color: "#DC661F",
         marginHorizontal: 10,
         paddingBottom: 10,
         textAlign: 'center'
     },
     card: {
         backgroundColor: 'rgba(255, 153, 0, 0.2)',
-        borderColor: 'rgba(255, 153, 0, 1)',
+        borderColor: "#DC661F",
         borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 10,

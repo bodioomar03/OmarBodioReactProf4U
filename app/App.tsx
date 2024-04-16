@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import HomePage from './HomePage.tsx';
 import DescriptionPage from './DescriptionPage.tsx';
+import { Image, View } from 'react-native';
 
 
 
@@ -20,7 +21,8 @@ function App(){
 
 	
 	return (
-		<Stack.Navigator initialRouteName="HomePage">
+		
+		<Stack.Navigator initialRouteName="HomePage" screenOptions={{headerShown: false,} }>
 			<Stack.Screen name="HomePage" component={HomePage} />
 			<Stack.Screen name="DescriptionPage" component={DescriptionPage} />
 	
@@ -31,9 +33,10 @@ function App(){
 function Providers() {
 	return (
 		<NavigationContainer>
-			
+			<View style={{backgroundColor: "#DC661F"}}>
+				<Image source={require('./img/Prof.png')} style={{resizeMode: 'stretch',height: 100, width: 100, alignSelf: 'center' }} />
+			</View>
 			<App />
-		
 		</NavigationContainer>
 	);
 }

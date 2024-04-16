@@ -27,7 +27,6 @@ function DescriptionPage() {
     return (
         <SafeAreaView>
             <View style={styles.background}>
-
                 <Text style={styles.title}>{name}</Text>
                 <View style={styles.subview}>
                     <Text style={styles.subtitle}>PERSONAL INFORMATION</Text>
@@ -66,12 +65,13 @@ function DescriptionPage() {
 
 }
 const styles = StyleSheet.create({
+    
     background: {
         backgroundColor: 'rgba(255, 153, 0, 0.2)'
     },
     subview: {
         backgroundColor: 'rgba(255, 153, 0, 0.2)',
-        borderColor: 'rgba(255, 153, 0, 1)',
+        borderColor: "#DC661F",
         borderWidth: 1,
         borderRadius: 10,
         paddingHorizontal: 10,
@@ -82,14 +82,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 36,
         fontWeight: 'bold',
-        color: 'rgba(255, 153, 0, 1)',
+        color: "#DC661F",
         marginBottom: 10,
         marginHorizontal: 10,
         textAlign: 'center',
     },
     subtitle: {
         fontSize: 20,
-        color: 'rgba(255, 153, 0, 1)',
+        color: "#DC661F",
         marginHorizontal: 10,
         marginBottom: 10,
         textAlign: 'center',
@@ -116,6 +116,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         paddingVertical: 20,
         borderRadius: 10,
+        
+        
     },
     textInButton: {
         color: 'white',
