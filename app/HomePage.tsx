@@ -1,8 +1,9 @@
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import {useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { ReactElement, JSXElementConstructor, ReactNode, Key, useState, useEffect, SetStateAction } from "react";
-import { ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Geolocation from '@react-native-community/geolocation';
+
 
 /**
  * Represents a card of a worker.
@@ -41,6 +42,7 @@ function HomePage() {
     const bs: string[] = Array.from(new Set(cards.flatMap(card => card.company.bs.split(" "))));
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
+    const [preferences, setPreferences] = useState<string[]>([]);
     
     Geolocation.getCurrentPosition(info => {
         setLatitude(info.coords.latitude);
@@ -66,6 +68,10 @@ function HomePage() {
 
     const onPress = (id: number, name: string, company_name: string, phone: string, address: string, email: string, website: string) => {
         (navigation as any).navigate("DescriptionPage", ({ id: id, name: name, company_name: company_name, phone: phone, address: address, email: email, website: website }));
+    }
+
+    const onPrefPress = (preferences: string[]) => {
+        (navigation as any).navigate("PrefPage", (preferences));
     }
     
     const distance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
@@ -106,39 +112,58 @@ function HomePage() {
                         thumbColor={order ? 'red' : '#f4f3f4'}
                         onValueChange={toggleSwitch}
                         value={order}
-
+                        
                     />
                 </Text>
+                <TouchableOpacity style={styles.button} onPress={() => onPrefPress(preferences)}>
+                        <Text style={styles.textInButton}>Preferences ({preferences.length}/{cards.length})</Text>
+                </TouchableOpacity>
                 {!loading ? (
-                    <ScrollView style={{ marginBottom: 400 }}>
+                    <ScrollView style={{ marginBottom: 500 }}>
                         {orderCards.map((card) => (
                             <TouchableOpacity key={card.id} onPress={() => onPress(card.id, card.name.toUpperCase(), card.company.name, card.phone.split(" ")[0], card.address.street + ", " + card.address.suite + ", " + card.address.city, card.email, card.website)}>
                                 <View style={styles.card}>
-                                    <Text style={styles.title}>{card.name}</Text>
-
+                                    <View style={styles.viewInCard}>
+                                        <Text style={styles.title}>{card.name}</Text>
+                                        <TouchableOpacity onPress={() => setPreferences([...card.name])}>
+                                            <View style={styles.buttonPref}>
+                                                <Text style={styles.textInButtonPref}>Add to</Text>
+                                                <Text style={styles.textInButtonPref}>preferences</Text>
+                                            </View>
+                                         </TouchableOpacity>
+                                    </View>
+                                    
                                     {card.company.bs.split(" ").map((job, index) => (
+                                    
                                         <View key={index} style={styles.card}>
                                             <Text style={styles.phrase} key={index}>{job}</Text>
                                         </View>
+                                    
                                     ))}
+                                    
 
                                 </View>
                             </TouchableOpacity>
                         ))}
+                          
 
                     </ScrollView>
+                      
                 ) : (
                     <View style={styles.load}>
                         <ActivityIndicator size={"large"} color={'rgba(255,70,0,1)'} />
                     </View>
                 )}
+                                
             </View>
+            
         </SafeAreaView>
     );
 
 
 }
 const styles = StyleSheet.create({
+    
     name: {
         fontSize: 20,
         color: "#DC661F",
@@ -150,17 +175,29 @@ const styles = StyleSheet.create({
     },
     background: {
         backgroundColor: 'rgba(255, 153, 0, 0.2)',
+        
 
     },
     load: {
         backgroundColor: 'rgba(255, 102, 0, 0.8)',
     },
     button: {
-        backgroundColor: 'rgba(255, 51, 0, 0.8)',
-        paddingHorizontal: 10,
+        backgroundColor: "#DC661F",
         fontSize: 24,
-        paddingVertical: 20,
+        margin: 5,
         borderRadius: 10,
+    },
+    buttonPref: {
+        backgroundColor: "#DC661F",
+        fontSize: 24,
+        margin: 5,
+        borderRadius: 10,
+        padding: 5,
+        alignSelf: 'flex-end'
+    },
+    viewInCard: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     phrase: {
         fontSize: 16,
@@ -168,6 +205,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         paddingBottom: 10,
         textAlign: 'center'
+    },
+    textInButton: {
+        color: 'white',
+        fontSize: 20,
+        textAlign: 'center',
+    },
+    textInButtonPref: {
+        color: 'white',
+        fontSize: 10,
+        textAlign: 'center',
     },
     title: {
         fontSize: 24,

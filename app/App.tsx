@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import HomePage from './HomePage.tsx';
 import DescriptionPage from './DescriptionPage.tsx';
+import PrefPage from './PrefPage.tsx';
 import { Image, View } from 'react-native';
 
 
@@ -25,6 +26,7 @@ function App(){
 		<Stack.Navigator initialRouteName="HomePage" screenOptions={{headerShown: false,} }>
 			<Stack.Screen name="HomePage" component={HomePage} />
 			<Stack.Screen name="DescriptionPage" component={DescriptionPage} />
+			<Stack.Screen name="PrefPage" component={PrefPage} />
 	
 		</Stack.Navigator>
 	);
