@@ -1,7 +1,7 @@
-import {useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import { ReactElement, JSXElementConstructor, ReactNode, Key, useState, useEffect, SetStateAction } from "react";
-import { ActivityIndicator, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Button, Platform, Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Geolocation from '@react-native-community/geolocation';
 
 
@@ -31,7 +31,7 @@ type CardOfWorker = {
         bs: string;
     };
 };
-
+const colorFlag = false;
 
 function HomePage() {
     const [loading, setLoading] = useState(false);
@@ -39,11 +39,10 @@ function HomePage() {
     const [order, setOrder] = useState<boolean>(false);
     const toggleSwitch = () => setOrder(previousState => !previousState);
     const navigation = useNavigation();
-    const bs: string[] = Array.from(new Set(cards.flatMap(card => card.company.bs.split(" "))));
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
     const [preferences, setPreferences] = useState<string[]>([]);
-    
+
     Geolocation.getCurrentPosition(info => {
         setLatitude(info.coords.latitude);
         setLongitude(info.coords.longitude);
@@ -59,7 +58,7 @@ function HomePage() {
 
     }
     useEffect(() => {
-        //chiamata api
+
         if (loading) return;
 
         loadData();
@@ -72,8 +71,9 @@ function HomePage() {
 
     const onPrefPress = (preferences: string[]) => {
         (navigation as any).navigate("PrefPage", (preferences));
+        console.log(preferences);
     }
-    
+
     const distance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
         var R = 6371;
         var dLat = (lat2 - lat1) * Math.PI / 180;
@@ -84,9 +84,9 @@ function HomePage() {
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         return R * c;
     }
-   
 
-    
+
+
 
     const [searchText, setSearchText] = useState("");
     const filteredCards = cards.filter((card) =>
@@ -94,11 +94,11 @@ function HomePage() {
     );
 
     const orderCards = order ? filteredCards.sort((a) => distance(Number(a.address.geo.lat), Number(a.address.geo.lng), latitude, longitude)) : filteredCards;
-    
+
 
     return (
         <SafeAreaView>
-            
+
             <View style={styles.background}>
                 <Text style={styles.name}>Prof4U: Where Companies Meet Competence!</Text>
                 <TextInput style={styles.input}
@@ -112,11 +112,15 @@ function HomePage() {
                         thumbColor={order ? 'red' : '#f4f3f4'}
                         onValueChange={toggleSwitch}
                         value={order}
-                        
+
                     />
                 </Text>
                 <TouchableOpacity style={styles.button} onPress={() => onPrefPress(preferences)}>
-                        <Text style={styles.textInButton}>Preferences ({preferences.length}/{cards.length})</Text>
+
+                    <Text style={styles.textInButton}>Preferences ({preferences.length})</Text>
+                    <TouchableOpacity style={styles.redbutton} onPress={() => setPreferences([])}>
+                        <Text style={styles.textInButton}>DELETE ALL PREFERENCES</Text>
+                    </TouchableOpacity>
                 </TouchableOpacity>
                 {!loading ? (
                     <ScrollView style={{ marginBottom: 500 }}>
@@ -125,45 +129,45 @@ function HomePage() {
                                 <View style={styles.card}>
                                     <View style={styles.viewInCard}>
                                         <Text style={styles.title}>{card.name}</Text>
-                                        <TouchableOpacity onPress={() => setPreferences([...card.name])}>
+                                        <TouchableOpacity onPress={() => !preferences.includes(card.name) ? setPreferences([...preferences, card.name]) : console.log("gia presente")}>
                                             <View style={styles.buttonPref}>
                                                 <Text style={styles.textInButtonPref}>Add to</Text>
                                                 <Text style={styles.textInButtonPref}>preferences</Text>
                                             </View>
-                                         </TouchableOpacity>
+                                        </TouchableOpacity>
                                     </View>
-                                    
+
                                     {card.company.bs.split(" ").map((job, index) => (
-                                    
+
                                         <View key={index} style={styles.card}>
                                             <Text style={styles.phrase} key={index}>{job}</Text>
                                         </View>
-                                    
+
                                     ))}
-                                    
+
 
                                 </View>
                             </TouchableOpacity>
                         ))}
-                          
+
 
                     </ScrollView>
-                      
+
                 ) : (
-                    <View style={styles.load}>
-                        <ActivityIndicator size={"large"} color={'rgba(255,70,0,1)'} />
-                    </View>
+                <View style={styles.load}>
+                    <ActivityIndicator size={"large"} color={'rgba(255,70,0,1)'} />
+                </View>
                 )}
-                                
+
             </View>
-            
+
         </SafeAreaView>
     );
 
 
 }
 const styles = StyleSheet.create({
-    
+
     name: {
         fontSize: 20,
         color: "#DC661F",
@@ -175,7 +179,7 @@ const styles = StyleSheet.create({
     },
     background: {
         backgroundColor: 'rgba(255, 153, 0, 0.2)',
-        
+
 
     },
     load: {
@@ -183,6 +187,14 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#DC661F",
+        fontSize: 24,
+        margin: 5,
+        borderRadius: 10,
+    },
+    redbutton: {
+        backgroundColor: "red",
+        borderBlockColor: 'white',
+        borderWidth: 1,
         fontSize: 24,
         margin: 5,
         borderRadius: 10,
