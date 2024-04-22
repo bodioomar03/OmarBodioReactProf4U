@@ -1,13 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import { ReactElement, JSXElementConstructor, ReactNode, Key, useState, useEffect, SetStateAction } from "react";
-import { ActivityIndicator, Button, Platform, Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {useState, useEffect} from "react";
+import { ActivityIndicator,SafeAreaView, ScrollView, StyleSheet, Switch, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Geolocation from '@react-native-community/geolocation';
 
-
-/**
- * Represents a card of a worker.
- */
+//Rapprenetazione di un lavoratore
 type CardOfWorker = {
     id: number;
     name: string;
@@ -31,9 +28,10 @@ type CardOfWorker = {
         bs: string;
     };
 };
-const colorFlag = false;
+
 
 function HomePage() {
+    const [searchText, setSearchText] = useState("");
     const [loading, setLoading] = useState(false);
     const [cards, setCard] = useState<CardOfWorker[]>([]);
     const [order, setOrder] = useState<boolean>(false);
@@ -42,12 +40,15 @@ function HomePage() {
     const [latitude, setLatitude] = useState<number>(0);
     const [longitude, setLongitude] = useState<number>(0);
     const [preferences, setPreferences] = useState<string[]>([]);
+    
 
+    //restituisce la posizione attuale utilizzando una libreria esterna
     Geolocation.getCurrentPosition(info => {
         setLatitude(info.coords.latitude);
         setLongitude(info.coords.longitude);
     });
 
+    //carica i dati da un server esterno
     const loadData = async () => {
         setLoading(true);
         axios
@@ -57,6 +58,7 @@ function HomePage() {
             .finally(() => setLoading(false));
 
     }
+    //carica i dati all'avvio dell'app
     useEffect(() => {
 
         if (loading) return;
@@ -65,15 +67,17 @@ function HomePage() {
 
     }, []);
 
+    //funzione che permette di passare alla pagina di descrizione e che passa tutti i parametri necessari
     const onPress = (id: number, name: string, company_name: string, phone: string, address: string, email: string, website: string) => {
         (navigation as any).navigate("DescriptionPage", ({ id: id, name: name, company_name: company_name, phone: phone, address: address, email: email, website: website }));
     }
 
+    //funzione che permette di passare alla pagina delle preferenze e che passa tutti i parametri necessari
     const onPrefPress = (preferences: string[]) => {
         (navigation as any).navigate("PrefPage", (preferences));
-        console.log(preferences);
     }
 
+    //funzione che calcola la distanza tra due punti dati i loro latitudine e longitudine, considerando la terra come una sfera
     const distance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
         var R = 6371;
         var dLat = (lat2 - lat1) * Math.PI / 180;
@@ -85,14 +89,12 @@ function HomePage() {
         return R * c;
     }
 
-
-
-
-    const [searchText, setSearchText] = useState("");
+    //filtro per la ricerca, non tiene conto delle maiuscole e delle minuscole e che la stringa inserita sia inizio della stringa relativa alla mansione
     const filteredCards = cards.filter((card) =>
         card.company.bs.toLowerCase().includes(searchText.toLowerCase())
     );
 
+    //ordina le card in base alla distanza
     const orderCards = order ? filteredCards.sort((a) => distance(Number(a.address.geo.lat), Number(a.address.geo.lng), latitude, longitude)) : filteredCards;
 
 

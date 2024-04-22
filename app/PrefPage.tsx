@@ -4,14 +4,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
 function PrefPage() {
-
+    //funzione per tornare indietro
     const navigation = useNavigation();
     const onButtonPress = () => {
         navigation.goBack()
     };
+    //recupera i dati passati dalla pagina precedente 
     const route = useRoute<{ params: {preferences: string[]} } & { key: string, name: string }>();
+
     const preferences = route.params;
-    console.log(preferences + " preferences");
     return (
         <View style={styles.background}>
             <Text style={styles.title}>Preferences</Text>

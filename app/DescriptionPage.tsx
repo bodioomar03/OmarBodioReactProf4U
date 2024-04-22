@@ -1,26 +1,20 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { Linking, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 
-
-
 function DescriptionPage() {
-
+    //funzione per tornare indietro
     const navigation = useNavigation();
     const onButtonPress = () => {
         navigation.goBack()
     };
+    //recupera i dati passati dalla pagina precedente
     const route = useRoute<{ params: { id: number, name: string, company_name: string, phone: string, address: string, email: string, website: string } } & { key: string, name: string }>();
     const { id, name, company_name, phone, address, email, website } = route.params;
 
+    //apre un link
     const openLink = (link: string) => {
         return Linking.openURL(link).catch((e) => console.warn(e))
     }
